@@ -7,6 +7,7 @@ import com.webdev.servlet.domain.TodoVO;
 import com.webdev.servlet.dto.TodoDTO;
 import com.webdev.servlet.util.Mapper;
 
+import java.rmi.StubNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,13 @@ public enum TodoService {
         dao.insert(vo);
     }
 
+    public TodoDTO get(Long tno) throws Exception {
+        log.info("tno: " + tno);
+        TodoVO todoVO = dao.selectOne(tno);
+        TodoDTO todoDTO = mapper.map(todoVO, TodoDTO.class);
+        return todoDTO;
+    }
+
     public List<TodoDTO> listAll() throws Exception {
         List<TodoVO> voList = dao.selectAll();
 
@@ -41,5 +49,19 @@ public enum TodoService {
                 .map(vo -> mapper.map(vo, TodoDTO.class)).collect(Collectors.toList());
 
         return dtoList;
+    }
+
+    public void remove(Long tno) throws Exception {
+
+        log.info("[DELETE] tno: " + tno);
+        dao.deleteOne(tno);
+    }
+
+    public void modify(TodoDTO todoDTO) throws Exception {
+        log.info("[UPDATE] DTO: " + todoDTO);
+
+        TodoVO vo = mapper.map(todoDTO, TodoVO.class);
+
+        dao.updateOne(vo);
     }
 }
