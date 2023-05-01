@@ -5,3 +5,9 @@ create table todo
     dueDate  date         not null,
     finished  tinyint default 0
 );
+
+create table member (
+    mid varchar(50) primary key,
+    mpw varchar(50) not null,
+    name varchar(100) not null
+);
