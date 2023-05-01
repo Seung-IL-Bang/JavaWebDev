@@ -11,3 +11,6 @@ create table member (
     mpw varchar(50) not null,
     name varchar(100) not null
 );
+
+alter table member
+    add column uuid varchar(50);
